@@ -1,7 +1,3 @@
-import 'bootstrap/scss/bootstrap.scss';
-import 'jQuery/dist/jquery.slim.min';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-
 import React from 'react';
 import { render } from 'react-dom';
 

@@ -7,7 +7,7 @@ const App = ({ children }) => (
   <div className="row flex-xl-nowrap flex-column">
     <Header />
 
-    <main>
+    <main className="p-5">
       {children}
     </main>
 
