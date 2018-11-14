@@ -22,3 +22,7 @@ $RECYCLE.BIN/
 .DS_Store
 .Spotlight-V100
 .Trashes
+
+
+.env
+.vscode
