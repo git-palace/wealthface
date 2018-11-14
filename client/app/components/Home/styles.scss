@@ -1,0 +1,22 @@
+h1 {
+    font-weight: 500;
+    font-size: 3rem;
+    color: #0d1c55;
+    position: relative;
+
+    &:after {
+        position: absolute;
+        content: '';
+        left: 42%;
+        right: 42%;
+        bottom: 0px;
+        border: 2px solid  #33b5e5;
+    }
+}
+h4 {
+    font-weight: 400;
+    color: #888;
+}
+form {
+    margin: 2rem 10rem;
+}

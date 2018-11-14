@@ -1,21 +1,23 @@
 import React from 'react';
 
+import './styles.scss';
+
 const Home = () => (
   <div className="container flex flex-column p-5">
-    <h1 className="text-center">Start Investing Today</h1>
+    <h1 className="text-center pb-4">Start Investing Today</h1>
 
-    <h4 className="text-center">We'll save your information so you don't have to fixll anything out again when you come back.</h4>
+    <h4 className="text-center pt-4">We'll save your information so you don't have to fixll anything out again<br/>when you come back.</h4>
 
     <form className="text-center">
 
       <div className="form-row">
-        <div className="col">
+        <div className="col mr-4">
           <div className="md-form">
             <input type="text" id="first_name" className="form-control" />
             <label htmlFor="first_name">First name</label>
           </div>
         </div>
-        <div className="col">
+        <div className="col ml-4">
           <div className="md-form">
             <input type="email" id="last_name" className="form-control" />
             <label htmlFor="last_name">Last name</label>
@@ -34,8 +36,8 @@ const Home = () => (
       </div>
 
       <div className="form-row">
-        <div className="col text-left">
-          <div className="form-check">
+        <div className="col text-left mr-4">
+          <div className="form-check pl-0">
             <input type="checkbox" className="form-check-input" id="not_us_tax" />
             <label className="form-check-label" htmlFor="not_us_tax">
               <b>I am NOT a United State tax resident.</b>
@@ -43,7 +45,7 @@ const Home = () => (
           </div>
         </div>
 
-        <div className="col text-left">
+        <div className="col text-left ml-4">
           <label><b>Clicking <em>Get Started</em> accepts <a href="" target="_blank">terms of use</a>.</b></label>
         </div>
       </div>
