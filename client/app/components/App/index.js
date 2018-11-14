@@ -4,7 +4,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 const App = ({ children }) => (
-  <>
+  <div className="row flex-xl-nowrap flex-column">
     <Header />
 
     <main>
@@ -12,7 +12,7 @@ const App = ({ children }) => (
     </main>
 
     <Footer />
-  </>
+  </div>
 );
 
 export default App;
