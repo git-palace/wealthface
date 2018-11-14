@@ -6,5 +6,23 @@ footer {
         position: relative;
         color: #fff;
         line-height: 2rem;
+        &[href] {
+            letter-spacing: 3px;
+            font-weight: bold;
+            &.social-icon {
+                font-size: 1.5rem;
+            }
+            &:hover {
+                color: #fff;
+                &:not(.social-icon):after{
+                    position: absolute;
+                    content: '';
+                    left: 0;
+                    right: 0;
+                    bottom: 3px;
+                    border: 1px solid #fff;
+                }
+            }
+        }
     }
 }
