@@ -1,12 +1,8 @@
 {
-  "name": "MERN-boilerplate",
+  "name": "Wealth Face",
   "version": "1.0.0",
-  "description": "MERN stack project boilerplate",
-  "author": "Eugene Cheung",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/arkon/MERN-boilerplate.git"
-  },
+  "description": "Wealth Face for Investers",
+  "author": "Legendary Assassin",
   "license": "MIT",
   "private": true,
   "scripts": {
