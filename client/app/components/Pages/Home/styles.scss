@@ -1,0 +1,25 @@
+.page-home {
+    form {
+        margin: 2rem 10rem;
+        label.terms_of_use {
+            font-weight: bolder;
+            color: #888;
+        }
+        button[type=submit] {
+            border-radius: 4px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            font-size: 1.5rem !important;
+        }
+    }
+    b {
+        font-weight: 500;
+        a {
+            color: #000;
+            &:hover {
+                color: #000;
+                text-decoration: underline;
+            }
+        }
+    }
+}

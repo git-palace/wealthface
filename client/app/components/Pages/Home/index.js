@@ -3,7 +3,7 @@ import React from 'react';
 import './styles.scss';
 
 const Home = () => (
-  <div className="container flex flex-column p-5">
+  <div className="container flex flex-column p-5 page-home">
     <h1 className="text-center pb-4">Start Investing Today</h1>
 
     <h4 className="text-center pt-4">We'll save your information so you don't have to fixll anything out again<br/>when you come back.</h4>

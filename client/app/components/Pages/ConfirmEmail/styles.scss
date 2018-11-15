@@ -1,0 +1,29 @@
+.page-confrim-email {
+    h4 {
+        line-height: 3rem;
+        b {
+            color: #000;
+            font-weight: bold;
+        }
+    }
+    button {
+        border-radius: 4px;
+        font-weight: 500;
+        letter-spacing: 3px;
+        font-size: 1.5rem !important;
+    }
+    a {
+        position: relative;
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid;
+        }
+        &.resend-v-email {
+            font-size: 1.5rem;
+        }
+    }
+}
