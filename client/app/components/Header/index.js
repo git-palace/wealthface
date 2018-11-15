@@ -77,6 +77,10 @@ class Header extends Component {
             this.setState({ signedIn: true });
             localStorage.setItem('user', JSON.stringify(json.user));
             $("#signin-form button.close").click();
+
+            if (!json.user.email_confirmed && location.pathname !== "/confirm-email") {
+              window.location.href = "/confirm-email";
+            }
           }
         })
     }
