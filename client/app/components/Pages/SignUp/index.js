@@ -11,6 +11,8 @@ class SignUp extends Component {
       last_name: '',
       email: '',
       password: '',
+      not_us_tax: false,
+      errMessage: '',
       isLoading: false
     };
 
@@ -18,7 +20,12 @@ class SignUp extends Component {
     this.onTextboxChangeLastName = this.onTextboxChangeLastName.bind(this);
     this.onTextboxChangeEmail = this.onTextboxChangeEmail.bind(this);
     this.onTextboxChangePassword = this.onTextboxChangePassword.bind(this);
+    this.onCheckboxChangeUSTax = this.onCheckboxChangeUSTax.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({ isLoading: false })
   }
 
   onTextboxChangeFirstName(event) {
@@ -45,12 +52,19 @@ class SignUp extends Component {
     });
   }
 
+  onCheckboxChangeUSTax(event) {
+    this.setState({
+      not_us_tax: event.target.checked
+    });
+  }
+
   onSignUp(event) {
     const {
       first_name,
       last_name,
       email,
-      password
+      password,
+      not_us_tax
     } = this.state;
 
     this.setState({ isLoading: true });
@@ -64,17 +78,33 @@ class SignUp extends Component {
         first_name: first_name,
         last_name: last_name,
         email: email,
-        password: password
+        password: password,
+        not_us_tax: not_us_tax
       })
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        if (!json.success) {
+          this.setState({
+            errMessage: json.message
+          });
+
+          $('#signUp-modal').modal();
+        } else {
+          this.props.history.push({
+            pathname: '/confirm-email',
+            state: {
+              user: json.user
+            }
+          });
+        }
+
+        this.setState({ isLoading: false });
       })
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, errMessage } = this.state;
 
     return (
       <div className="container flex flex-column p-5 page-signup">
@@ -112,7 +142,7 @@ class SignUp extends Component {
           <div className="form-row">
             <div className="col text-left mr-4">
               <div className="form-check pl-0">
-                <input type="checkbox" className="form-check-input" id="not_us_tax" name="not_us_tax" />
+                <input type="checkbox" className="form-check-input" id="not_us_tax" name="not_us_tax" onChange={this.onCheckboxChangeUSTax} />
                 <label className="form-check-label" htmlFor="not_us_tax">
                   <b>I am NOT a United State tax resident.</b>
                 </label>
@@ -145,6 +175,31 @@ class SignUp extends Component {
             ) : (null)
           }
         </form>
+
+        <div className="modal fade" id="signUp-modal" tabIndex="-1" role="dialog">
+          <div className="modal-dialog modal-notify modal-danger" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <p className="heading lead">SignUp Error</p>
+
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" className="white-text">&times;</span>
+                </button>
+              </div>
+
+              <div className="modal-body">
+                <div className="text-center">
+                  <i className="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                  <p>{errMessage}</p>
+                </div>
+              </div>
+
+              <div className="modal-footer justify-content-center">
+                <button type="button" className="btn btn-outline-danger waves-effect" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     );

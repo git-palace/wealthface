@@ -8,7 +8,6 @@ const UserSchema = mongoose.Schema({
     email_confirmed: { type: Boolean, default: false },
     password_hash: { type: String, required: true },
     not_us_tax: { type: Boolean, default: false },
-    token_seed: { type: String, required: true, unqiue: true },
     created: { type: Date, default: () => new Date() }
 });
 
@@ -22,4 +21,4 @@ UserSchema.methods = {
     }
 }
 
-module.exports = mongoose.model('user', UserSchema)
+module.exports = mongoose.model('User', UserSchema)
