@@ -67,6 +67,7 @@ module.exports = (app) => {
                     });
                 }
 
+                user = Object.assign(user.toObject(), { token: user.createToken() });
                 delete user.password_hash;
 
                 return res.send({
@@ -77,4 +78,33 @@ module.exports = (app) => {
             });
         });
     });
+
+    app.post('/api/user/signin', (req, res, next) => {
+        let params = req.body;
+
+        User.findOne({ email: params['email'] }, (err, user) => {
+            if (err) {
+                return res.send({
+                    success: false,
+                    message: 'Error: Server Error.'
+                })
+            }
+
+            if (!user.validPassword(params['password'])) {
+                return res.send({
+                    success: false,
+                    message: 'Error: Credentials are wrong'
+                });
+            }
+
+            user = Object.assign(user.toObject(), { token: user.createToken() });
+            delete user.password_hash;
+
+            return res.send({
+                success: true,
+                user: user,
+                message: 'Signed In'
+            })
+        });
+    })
 };

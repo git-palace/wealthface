@@ -6,11 +6,7 @@ class ConfirmEmail extends Component {
 	constructor(props) {
 		super(props)
 
-		try {
-			this.user = props.location.state.user;
-		} catch {
-			this.user = null;
-		}
+		this.user = JSON.parse(localStorage.getItem('user'));
 
 		if (!this.user) {
 			this.props.history.push('/');

@@ -91,12 +91,8 @@ class SignUp extends Component {
 
           $('#signUp-modal').modal();
         } else {
-          this.props.history.push({
-            pathname: '/confirm-email',
-            state: {
-              user: json.user
-            }
-          });
+          localStorage.setItem('user', JSON.stringify(json.user));
+          location.href = "/confirm-email";
         }
 
         this.setState({ isLoading: false });

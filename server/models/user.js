@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const UserSchema = mongoose.Schema({
     first_name: { type: String, required: true },
@@ -12,12 +13,16 @@ const UserSchema = mongoose.Schema({
 });
 
 UserSchema.methods = {
-    generateHash: (password) => {
+    generateHash: function(password) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     },
 
-    validPassword: (password) => {
-        return bcrypt.compareSync(password, this.password);
+    validPassword: function(password) {
+        return bcrypt.compareSync(password, this.password_hash);
+    },
+
+    createToken: function() {
+        return jwt.sign(this.toObject(), 'token');
     }
 }
 
