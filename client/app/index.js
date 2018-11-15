@@ -9,7 +9,7 @@ import {
 
 import App from './components/App';
 
-import Home from './components/Pages/Home';
+import SignUp from './components/Pages/SignUp';
 import ConfirmEmail from './components/Pages/ConfirmEmail';
 import Help from './components/Pages/Help'
 
@@ -19,7 +19,7 @@ render((
   <Router>
     <App>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={SignUp} />
         <Route exact path="/confirm-email" component={ConfirmEmail} />
         <Route exact path="/help" component={Help} />
       </Switch>
