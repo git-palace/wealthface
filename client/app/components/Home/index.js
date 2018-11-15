@@ -46,9 +46,11 @@ const Home = () => (
         </div>
 
         <div className="col text-left ml-4">
-          <label><b>Clicking <em>Get Started</em> accepts <a href="" target="_blank">terms of use</a>.</b></label>
+          <label className="terms_of_use">Clicking Get Started accepts <b><a href="" target="_blank">terms of use</a>.</b></label>
         </div>
       </div>
+
+      <button type="submit" className="col-6 btn btn-primary btn-block btn-lg mx-auto py-4">Get Started</button>
 
     </form>
 

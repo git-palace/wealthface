@@ -9,7 +9,7 @@ const Header = () => (
     </div>
 
     <div className="col-3 ml-auto my-auto text-right px-5 py-4">
-      <button type="button" className="btn btn-outline waves-effect m-auto px-4 py-2 text-uppercase">Sign In</button>
+      <button type="button" className="btn btn-outline-indigo waves-effect m-auto px-4 py-2 text-uppercase">Sign In</button>
     </div>
   </header>
 );
