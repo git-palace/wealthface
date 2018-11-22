@@ -21,6 +21,7 @@ render((
       <Switch>
         <Route exact path="/" component={SignUp} />
         <Route exact path="/confirm-email" component={ConfirmEmail} />
+        <Route exact path="/confirm-email/:token" component={ConfirmEmail} />
         <Route exact path="/help" component={Help} />
       </Switch>
     </App>

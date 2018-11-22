@@ -13,15 +13,15 @@ const UserSchema = mongoose.Schema({
 });
 
 UserSchema.methods = {
-    generateHash: function(password) {
+    generateHash: function (password) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     },
 
-    validPassword: function(password) {
+    validPassword: function (password) {
         return bcrypt.compareSync(password, this.passwordHash);
     },
 
-    createToken: function() {
+    createToken: function () {
         return jwt.sign(this.toObject(), 'token');
     }
 }

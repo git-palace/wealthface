@@ -1,32 +1,53 @@
 const User = require('../../models/User');
+const Token = require('../../models/Token');
+const crypto = require('crypto');
+
+require('dotenv').config()
+
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const sendVerificationEmail = (email, token) => {
+    let verificationLink = process.env.host + '/confirm-email/' + token;
+
+    const msg = {
+        to: email,
+        from: 'info@wealthface.com',
+        subject: 'Verify your account',
+        text: verificationLink,
+        html: '<a href=' + verificationLink + '>' + verificationLink + '</a>',
+    };
+
+    sgMail.send(msg);
+};
 
 module.exports = (app) => {
     app.post('/api/user/signup', (req, res, next) => {
         let params = req.body;
 
         if (!params['firstName']) {
-            return res.send({
+            return res.status(400).send({
                 success: false,
                 message: 'Error: First name cannot be blank.'
             });
         }
 
         if (!params['lastName']) {
-            return res.send({
+            return res.status(400).send({
                 success: false,
                 message: 'Error: Last name cannot be blank.'
             });
         }
 
         if (!params['email']) {
-            return res.send({
+            return res.status(400).send({
                 success: false,
                 message: 'Error: Email cannot be blank.'
             });
         }
 
         if (!params['password']) {
-            return res.send({
+            return res.status(400).send({
                 success: false,
                 message: 'Error: Password cannot be blank.'
             });
@@ -39,12 +60,12 @@ module.exports = (app) => {
             email: email
         }, (err, previousUsers) => {
             if (err) {
-                return res.send({
+                return res.status(500).send({
                     success: false,
                     message: 'Error: Server error.'
                 });
             } else if (previousUsers.length) {
-                return res.send({
+                return res.status(500).send({
                     success: false,
                     message: 'Error: Account already exists.'
                 });
@@ -61,19 +82,34 @@ module.exports = (app) => {
 
             newUser.save((err, user) => {
                 if (err) {
-                    return res.send({
+                    return res.status(500).send({
                         success: false,
                         message: 'Error: Server error'
                     });
                 }
 
-                user = Object.assign(user.toObject(), { token: user.createToken() });
-                delete user.passwordHash;
+                let token = new Token({
+                    _userId: user._id,
+                    token: crypto.randomBytes(16).toString('hex')
+                });
 
-                return res.send({
-                    success: true,
-                    user: user,
-                    message: 'Waiting v-email confirmation.'
+                token.save(function (err) {
+                    if (err) {
+                        return res.status(500).send({
+                            message: err.message
+                        })
+                    }
+
+                    sendVerificationEmail(user.email, token.token);
+
+                    user = Object.assign(user.toObject(), { token: user.createToken() });
+                    delete user.passwordHash;
+
+                    return res.status(200).send({
+                        success: true,
+                        user: user,
+                        message: 'Waiting v-email confirmation.'
+                    });
                 });
             });
         });
@@ -84,14 +120,14 @@ module.exports = (app) => {
 
         User.findOne({ email: params['email'] }, (err, user) => {
             if (err) {
-                return res.send({
+                return res.status(500).send({
                     success: false,
                     message: 'Error: Server Error.'
                 })
             }
 
             if (!user.validPassword(params['password'])) {
-                return res.send({
+                return res.status(400).send({
                     success: false,
                     message: 'Error: Credentials are wrong'
                 });
@@ -100,7 +136,7 @@ module.exports = (app) => {
             user = Object.assign(user.toObject(), { token: user.createToken() });
             delete user.passwordHash;
 
-            return res.send({
+            return res.status(200).send({
                 success: true,
                 user: user,
                 message: 'Signed In'

@@ -1,3 +1,4 @@
+/cf512e96814b3ef2e6ea300178bc8da5
 # MERN-boilerplate
 
 This is a boilerplate project using the following technologies:
