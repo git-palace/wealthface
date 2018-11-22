@@ -7,11 +7,11 @@ class SignUp extends Component {
     super(props)
 
     this.state = {
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
-      not_us_tax: false,
+      notUSTax: false,
       errMessage: '',
       isLoading: false
     };
@@ -30,13 +30,13 @@ class SignUp extends Component {
 
   onTextboxChangeFirstName(event) {
     this.setState({
-      first_name: event.target.value
+      firstName: event.target.value
     });
   }
 
   onTextboxChangeLastName(event) {
     this.setState({
-      last_name: event.target.value
+      lastName: event.target.value
     });
   }
 
@@ -54,17 +54,17 @@ class SignUp extends Component {
 
   onCheckboxChangeUSTax(event) {
     this.setState({
-      not_us_tax: event.target.checked
+      notUSTax: event.target.checked
     });
   }
 
   onSignUp(event) {
     const {
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       password,
-      not_us_tax
+      notUSTax
     } = this.state;
 
     this.setState({ isLoading: true });
@@ -75,11 +75,11 @@ class SignUp extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        first_name: first_name,
-        last_name: last_name,
+        firstName: firstName,
+        lastName: lastName,
         email: email,
         password: password,
-        not_us_tax: not_us_tax
+        notUSTax: notUSTax
       })
     })
       .then(res => res.json())
@@ -113,14 +113,14 @@ class SignUp extends Component {
           <div className="form-row">
             <div className="col mr-4">
               <div className="md-form">
-                <input type="text" id="first_name" className="form-control" name="first_name" onChange={this.onTextboxChangeFirstName} />
-                <label htmlFor="first_name">First name</label>
+                <input type="text" id="firstName" className="form-control" name="firstName" onChange={this.onTextboxChangeFirstName} />
+                <label htmlFor="firstName">First name</label>
               </div>
             </div>
             <div className="col ml-4">
               <div className="md-form">
-                <input type="text" id="last_name" className="form-control" name="last_name" onChange={this.onTextboxChangeLastName} />
-                <label htmlFor="last_name">Last name</label>
+                <input type="text" id="lastName" className="form-control" name="lastName" onChange={this.onTextboxChangeLastName} />
+                <label htmlFor="lastName">Last name</label>
               </div>
             </div>
           </div>
@@ -138,8 +138,8 @@ class SignUp extends Component {
           <div className="form-row">
             <div className="col text-left mr-4">
               <div className="form-check pl-0">
-                <input type="checkbox" className="form-check-input" id="not_us_tax" name="not_us_tax" onChange={this.onCheckboxChangeUSTax} />
-                <label className="form-check-label" htmlFor="not_us_tax">
+                <input type="checkbox" className="form-check-input" id="notUSTax" name="notUSTax" onChange={this.onCheckboxChangeUSTax} />
+                <label className="form-check-label" htmlFor="notUSTax">
                   <b>I am NOT a United State tax resident.</b>
                 </label>
               </div>

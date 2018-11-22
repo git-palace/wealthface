@@ -26,7 +26,7 @@ class Header extends Component {
     if (user) {
       this.setState({ signedIn: true });
 
-      if (!user.email_confirmed && location.pathname !== "/confirm-email") {
+      if (!user.is_verified && location.pathname !== "/confirm-email") {
         window.location.href = "/confirm-email";
       }
     }
@@ -78,7 +78,7 @@ class Header extends Component {
             localStorage.setItem('user', JSON.stringify(json.user));
             $("#signin-form button.close").click();
 
-            if (!json.user.email_confirmed && location.pathname !== "/confirm-email") {
+            if (!json.user.is_verified && location.pathname !== "/confirm-email") {
               window.location.href = "/confirm-email";
             }
           }

@@ -4,14 +4,14 @@ module.exports = (app) => {
     app.post('/api/user/signup', (req, res, next) => {
         let params = req.body;
 
-        if (!params['first_name']) {
+        if (!params['firstName']) {
             return res.send({
                 success: false,
                 message: 'Error: First name cannot be blank.'
             });
         }
 
-        if (!params['last_name']) {
+        if (!params['lastName']) {
             return res.send({
                 success: false,
                 message: 'Error: Last name cannot be blank.'
@@ -53,11 +53,11 @@ module.exports = (app) => {
             // Save the new user
             const newUser = new User();
 
-            newUser.first_name = params['first_name'];
-            newUser.last_name = params['last_name'];
+            newUser.firstName = params['firstName'];
+            newUser.lastName = params['lastName'];
             newUser.email = email;
-            newUser.password_hash = newUser.generateHash(params['password']);
-            newUser.not_us_tax = params['not_us_tax'];
+            newUser.passwordHash = newUser.generateHash(params['password']);
+            newUser.notUSTax = params['notUSTax'];
 
             newUser.save((err, user) => {
                 if (err) {
@@ -68,7 +68,7 @@ module.exports = (app) => {
                 }
 
                 user = Object.assign(user.toObject(), { token: user.createToken() });
-                delete user.password_hash;
+                delete user.passwordHash;
 
                 return res.send({
                     success: true,
@@ -98,7 +98,7 @@ module.exports = (app) => {
             }
 
             user = Object.assign(user.toObject(), { token: user.createToken() });
-            delete user.password_hash;
+            delete user.passwordHash;
 
             return res.send({
                 success: true,
@@ -106,5 +106,5 @@ module.exports = (app) => {
                 message: 'Signed In'
             })
         });
-    })
+    });
 };

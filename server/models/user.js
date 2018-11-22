@@ -3,13 +3,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const UserSchema = mongoose.Schema({
-    first_name: { type: String, required: true },
-    last_name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     email: { type: String, required: true, unqiue: true },
-    email_confirmed: { type: Boolean, default: false },
-    password_hash: { type: String, required: true },
-    not_us_tax: { type: Boolean, default: false },
-    created: { type: Date, default: () => new Date() }
+    isVerified: { type: Boolean, default: false },
+    passwordHash: { type: String, required: true },
+    notUSTax: { type: Boolean, default: false },
+    createdAt: { type: Date, default: () => new Date() }
 });
 
 UserSchema.methods = {
@@ -18,7 +18,7 @@ UserSchema.methods = {
     },
 
     validPassword: function(password) {
-        return bcrypt.compareSync(password, this.password_hash);
+        return bcrypt.compareSync(password, this.passwordHash);
     },
 
     createToken: function() {
