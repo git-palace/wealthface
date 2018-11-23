@@ -1,0 +1,38 @@
+.page-steps {
+    .step-no {
+        text-align: center;
+        color: #3b77ff;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+    }
+    .card {
+        border-radius: 1rem;
+        min-height: 550px;
+        .card-body {
+            .card-title {
+                font-weight: 500;
+            }
+            hr {
+                border-width: 5px;
+                width: 40%;
+                margin-left: 0;
+                border-color: #66c9e8;
+            }
+            .card-text {
+                font-size: 1.3rem;
+                line-height: 2.5rem;
+            }
+            a {
+                letter-spacing: 2px;
+                font-weight: bold;
+                font-size: 1.2rem;
+                border-radius: 8px;
+            }
+        }
+    }
+    div.step[disabled] * {
+        color: #ddd !important;
+        border-color: #ddd !important;
+    }
+}

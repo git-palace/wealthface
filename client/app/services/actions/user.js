@@ -10,7 +10,7 @@ export const userSignIn = (dispatch, email, password) => {
             if (!data.user.isVerified)
                 dispatch(push('/confirm-email'))
             else
-                dispatch(push('/start-step-1'))
+                dispatch(push('/steps'))
         }
     })
 }
@@ -34,21 +34,26 @@ export const populateUserData = (dispatch, token, vEmailToken) => {
     POST('/api/user/parse-token', { token: token }).then(data => {
         dispatch({ type: USER.SIGN_IN, data: data })
 
-        if (data.user && !data.user.isVerified) {
-            if (vEmailToken) {
-                POST('/api/user/verify-email', { vEmailtoken: vEmailToken, email: data.user.email }).then(data => {
-                    console.log(data)
-                    dispatch({ type: USER.EMAIL_VERIFICATION, data: data })
+        if (data.user) {
+            if (!data.user.isVerified) {
+                if (vEmailToken) {
+                    POST('/api/user/verify-email', { vEmailtoken: vEmailToken, email: data.user.email }).then(data => {
+                        console.log(data)
+                        dispatch({ type: USER.EMAIL_VERIFICATION, data: data })
 
-                    if (data.success) {
-                        dispatch(push('/start-step-1'))
-                    } else {
-                        dispatch(push('/confirm-email/'))
-                    }
-                })
+                        if (data.success) {
+                            dispatch(push('/steps'))
+                        } else {
+                            dispatch(push('/confirm-email/'))
+                        }
+                    })
+                } else {
+                    dispatch(push('/confirm-email/'))
+                }
             } else {
-                dispatch(push('/confirm-email/'))
+                dispatch(push('/steps'))
             }
+
         }
     })
 }

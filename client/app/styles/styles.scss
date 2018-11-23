@@ -3,7 +3,7 @@
 main {
     position: relative;
     height: calc(100vh - 180px);
-    &:after {
+    &:before {
         content: '';
         position: fixed;
         background-image: url('/assets/img/finance_man.jpg');

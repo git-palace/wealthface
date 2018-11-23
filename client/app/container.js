@@ -14,6 +14,8 @@ import Footer from './components/Footer'
 import GetStarted from './components/Pages/GetStarted'
 import ConfirmEmail from './components/Pages/ConfirmEmail'
 import Help from './components/Pages/Help'
+import Steps from './components/Pages/Steps'
+import SelectStyle from './components/Pages/Steps/SelectStyle'
 
 class Container extends Component {
     constructor(props) {
@@ -53,6 +55,9 @@ class Container extends Component {
                                 email={this.props.user.userData ? this.props.user.userData.email : null}
                             />
                         )} />
+
+                        <Route exact path="/steps" component={Steps} />
+                        <Route exact path="/steps/select-style" component={SelectStyle} />
 
                         <Route exact path="/help" component={Help} />
                     </Switch>
