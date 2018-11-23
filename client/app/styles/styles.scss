@@ -2,6 +2,7 @@
 // @import 'vendor/normalize';
 main {
     position: relative;
+    height: calc(100vh - 180px);
     &:after {
         content: '';
         position: fixed;

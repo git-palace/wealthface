@@ -25,6 +25,9 @@
             position: absolute;
             top: calc(50% - 3rem);
         }
+        .invalid-feedback {
+            text-align: left;
+        }
     }
     b {
         font-weight: 500;

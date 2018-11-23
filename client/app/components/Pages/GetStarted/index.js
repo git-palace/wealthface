@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import './styles.scss';
+import './styles.scss'
 
-class SignUp extends Component {
+class GetStarted extends Component {
   constructor(props) {
     super(props)
 
@@ -12,16 +12,22 @@ class SignUp extends Component {
       email: '',
       password: '',
       notUSTax: false,
-      errMessage: '',
       isLoading: false
-    };
+    }
 
-    this.onTextboxChangeFirstName = this.onTextboxChangeFirstName.bind(this);
-    this.onTextboxChangeLastName = this.onTextboxChangeLastName.bind(this);
-    this.onTextboxChangeEmail = this.onTextboxChangeEmail.bind(this);
-    this.onTextboxChangePassword = this.onTextboxChangePassword.bind(this);
-    this.onCheckboxChangeUSTax = this.onCheckboxChangeUSTax.bind(this);
-    this.onSignUp = this.onSignUp.bind(this);
+    this.onTextboxChangeFirstName = this.onTextboxChangeFirstName.bind(this)
+    this.onTextboxChangeLastName = this.onTextboxChangeLastName.bind(this)
+    this.onTextboxChangeEmail = this.onTextboxChangeEmail.bind(this)
+    this.onTextboxChangePassword = this.onTextboxChangePassword.bind(this)
+    this.onCheckboxChangeUSTax = this.onCheckboxChangeUSTax.bind(this)
+    this.onSignUp = this.onSignUp.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errorSignUp)
+      $('#signUp-errModal').modal()
+    else
+      this.setState({ isLoading: false })
   }
 
   componentDidMount() {
@@ -31,76 +37,64 @@ class SignUp extends Component {
   onTextboxChangeFirstName(event) {
     this.setState({
       firstName: event.target.value
-    });
+    })
   }
 
   onTextboxChangeLastName(event) {
     this.setState({
       lastName: event.target.value
-    });
+    })
   }
 
   onTextboxChangeEmail(event) {
     this.setState({
       email: event.target.value
-    });
+    })
   }
 
   onTextboxChangePassword(event) {
     this.setState({
       password: event.target.value
-    });
+    })
   }
 
   onCheckboxChangeUSTax(event) {
     this.setState({
       notUSTax: event.target.checked
-    });
+    })
   }
 
   onSignUp(event) {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      notUSTax
-    } = this.state;
+    event.preventDefault()
+    event.stopPropagation()
 
-    this.setState({ isLoading: true });
+    if (event.target.checkValidity()) {
+      const {
+        firstName,
+        lastName,
+        email,
+        password,
+        notUSTax
+      } = this.state
 
-    fetch('/api/user/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+      this.setState({ isLoading: true })
+
+      this.props.userSignUp({
         firstName: firstName,
         lastName: lastName,
         email: email,
         password: password,
         notUSTax: notUSTax
       })
-    })
-      .then(res => res.json())
-      .then(json => {
-        if (!json.success) {
-          this.setState({
-            errMessage: json.message
-          });
 
-          $('#signUp-modal').modal();
-        } else {
-          localStorage.setItem('user', JSON.stringify(json.user));
-          location.href = "/confirm-email";
-        }
+      this.setState({ isLoading: true })
+    }
 
-        this.setState({ isLoading: false });
-      })
+    event.target.classList.add('was-validated')
   }
 
   render() {
-    const { isLoading, errMessage } = this.state;
+    const { isLoading } = this.state;
 
     return (
       <div className="container flex flex-column p-5 page-signup">
@@ -108,31 +102,35 @@ class SignUp extends Component {
 
         <h4 className="text-center pt-4">We'll save your information so you don't have to fixll anything out again<br />when you come back.</h4>
 
-        <form className={"text-center " + (isLoading ? 'is-loading' : null)}>
+        <form className={"needs-validation text-center " + (isLoading ? 'is-loading' : '')} noValidate onSubmit={this.onSignUp}>
 
           <div className="form-row">
             <div className="col mr-4">
               <div className="md-form">
-                <input type="text" id="firstName" className="form-control" name="firstName" onChange={this.onTextboxChangeFirstName} />
+                <input type="text" id="firstName" className="form-control" name="firstName" required onChange={this.onTextboxChangeFirstName} />
                 <label htmlFor="firstName">First name</label>
+                <div className="invalid-feedback">First name is required</div>
               </div>
             </div>
             <div className="col ml-4">
               <div className="md-form">
-                <input type="text" id="lastName" className="form-control" name="lastName" onChange={this.onTextboxChangeLastName} />
+                <input type="text" id="lastName" className="form-control" name="lastName" required onChange={this.onTextboxChangeLastName} />
                 <label htmlFor="lastName">Last name</label>
+                <div className="invalid-feedback">Last name is required</div>
               </div>
             </div>
           </div>
 
           <div className="md-form mt-0">
-            <input type="email" id="email" className="form-control" name="email" onChange={this.onTextboxChangeEmail} />
+            <input type="email" id="email" className="form-control" name="email" required onChange={this.onTextboxChangeEmail} />
             <label htmlFor="email">Your Email</label>
+            <div className="invalid-feedback">Email is required</div>
           </div>
 
           <div className="md-form">
-            <input type="password" id="password" className="form-control" name="password" onChange={this.onTextboxChangePassword} />
+            <input type="password" id="password" className="form-control" name="password" required onChange={this.onTextboxChangePassword} />
             <label htmlFor="password">Password</label>
+            <div className="invalid-feedback">Passsword is required</div>
           </div>
 
           <div className="form-row">
@@ -150,7 +148,9 @@ class SignUp extends Component {
             </div>
           </div>
 
-          <button type="button" className="col-6 btn btn-primary btn-block btn-lg mx-auto py-4" onClick={this.onSignUp}>Get Started</button>
+          <div className="form-row">
+            <button type="submit" className="col-6 btn btn-primary btn-block btn-lg mx-auto py-4">Get Started</button>
+          </div>
           {
             (isLoading) ? (
               <div className="col-12 preloader-container">
@@ -172,7 +172,7 @@ class SignUp extends Component {
           }
         </form>
 
-        <div className="modal fade" id="signUp-modal" tabIndex="-1" role="dialog">
+        <div className="modal fade" id="signUp-errModal" tabIndex="-1" role="dialog">
           <div className="modal-dialog modal-notify modal-danger" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -186,7 +186,7 @@ class SignUp extends Component {
               <div className="modal-body">
                 <div className="text-center">
                   <i className="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-                  <p>{errMessage}</p>
+                  <p>{this.props.errorSignUpMsg}</p>
                 </div>
               </div>
 
@@ -198,7 +198,8 @@ class SignUp extends Component {
         </div>
 
       </div>
-    );
+    )
   }
 }
-export default SignUp;
+
+export default GetStarted

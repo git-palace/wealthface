@@ -1,41 +1,41 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import './styles.scss';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import './styles.scss'
 
 class Header extends Component {
   constructor(props) {
     super(props)
 
-    this.onTextboxEmailChange = this.onTextboxEmailChange.bind(this);
-    this.onTextboxPasswordChange = this.onTextboxPasswordChange.bind(this);
-    this.onSignIn = this.onSignIn.bind(this);
-    this.onSignOut = this.onSignOut.bind(this);
+    this.onTextboxEmailChange = this.onTextboxEmailChange.bind(this)
+    this.onTextboxPasswordChange = this.onTextboxPasswordChange.bind(this)
+    this.onSignIn = this.onSignIn.bind(this)
+    this.onSignOut = this.onSignOut.bind(this)
 
     this.state = {
       email: '',
       password: '',
       errorSignIn: false,
-      errorMessage: '',
-      signedIn: false
+      errorSignInMsg: '',
+      isSignedIn: false
     }
   }
 
-  componentDidMount() {
-    let user = JSON.parse(localStorage.getItem('user'));
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      errorSignIn: nextProps.user.errorSignIn,
+      errorSignInMsg: nextProps.user.errorSignInMsg,
+      isSignedIn: nextProps.user.isSignedIn
+    })
 
-    if (user) {
-      this.setState({ signedIn: true });
-
-      if (!user.is_verified && location.pathname !== "/confirm-email") {
-        window.location.href = "/confirm-email";
-      }
+    if (nextProps.user.isSignedIn) {
+      $("#signin-form button.close").click()
     }
   }
 
   onTextboxEmailChange(event) {
     this.setState({
       email: event.target.value
-    });
+    })
   }
 
   onTextboxPasswordChange(event) {
@@ -45,57 +45,29 @@ class Header extends Component {
   }
 
   onSignIn(event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    let form = event.target;
+    event.preventDefault()
+    event.stopPropagation()
 
     if (event.target.checkValidity()) {
       const {
         email,
         password
-      } = this.state;
+      } = this.state
 
-      fetch('/api/user/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      })
-        .then(res => res.json())
-        .then(json => {
-          this.setState({
-            errorSignIn: !json.success,
-            errorMessage: json.message
-          });
-
-          if (json.success) {
-            this.setState({ signedIn: true });
-            localStorage.setItem('user', JSON.stringify(json.user));
-            $("#signin-form button.close").click();
-
-            if (!json.user.is_verified && location.pathname !== "/confirm-email") {
-              window.location.href = "/confirm-email";
-            }
-          }
-        })
+      this.props.userSignIn(email, password)
     }
 
-    event.target.classList.add('was-validated');
+    event.target.classList.add('was-validated')
   }
 
   onSignOut(event) {
-    localStorage.removeItem('user');
-    this.setState({ signedIn: false });
-    location.href = "/";
+    localStorage.removeItem('token')
+    this.setState({ isSignedIn: false })
+    window.location.href = "/"
   }
 
   render() {
-    const { errorSignIn, errorMessage, signedIn } = this.state;
+    const { errorSignIn, errorSignInMsg, isSignedIn } = this.state
 
     return (
       <>
@@ -110,7 +82,7 @@ class Header extends Component {
               </div>
 
               <div className="modal-body col-12 p-5">
-                {(errorSignIn) ? (< div className="alert alert-danger" role="alert">{errorMessage}</div>) : (null)}
+                {(errorSignIn) ? (< div className="alert alert-danger" role="alert">{errorSignInMsg}</div>) : (null)}
                 <form className="needs-validation col-12" noValidate onSubmit={this.onSignIn}>
                   <div className="form-row">
                     <div className="col-md-12 mb-3 md-form">
@@ -144,7 +116,7 @@ class Header extends Component {
 
           <div className="col-3 ml-auto my-auto text-right px-5 py-4">
             {
-              (!signedIn) ? (
+              (!isSignedIn) ? (
                 <button type="button" className="btn btn-outline-indigo waves-effect m-auto px-4 py-2 text-uppercase" data-toggle="modal" data-target="#signin-form">Sign In</button>
               ) : (
                   <button type="button" className="btn btn-outline-indigo waves-effect m-auto px-4 py-2 text-uppercase" onClick={this.onSignOut}>Log Out</button>
@@ -157,4 +129,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default Header

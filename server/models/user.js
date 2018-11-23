@@ -26,4 +26,10 @@ UserSchema.methods = {
     }
 }
 
+UserSchema.statics = {
+    parseToken: function (token) {
+        return jwt.decode(token, 'token');
+    }
+}
+
 module.exports = mongoose.model('User', UserSchema)
