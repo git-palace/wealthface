@@ -38,7 +38,6 @@ export const populateUserData = (dispatch, token, vEmailToken) => {
             if (!data.user.isVerified) {
                 if (vEmailToken) {
                     POST('/api/user/verify-email', { vEmailtoken: vEmailToken, email: data.user.email }).then(data => {
-                        console.log(data)
                         dispatch({ type: USER.EMAIL_VERIFICATION, data: data })
 
                         if (data.success) {

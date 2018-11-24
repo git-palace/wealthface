@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-
 import './styles.scss'
 
 class Steps extends Component {
+    constructor(props) {
+        super(props)
+
+        this.startStep = this.startStep.bind(this)
+    }
+
+    startStep(event) {
+        let stepNo = event.target.getAttribute("step-no")
+        this.props.getAllQuestions(stepNo)
+    }
+
     render() {
         return (
             <div className="container py-5 page-steps">
@@ -21,7 +30,7 @@ class Steps extends Component {
                                     Take 1-2 minutes to answer<br /> these questions so we can<br /> build a profile that/s right for<br /> you.
                                 </p>
 
-                                <Link to="/steps/select-style" className="btn btn-primary btn-block btn-lg mx-auto py-4">Get Started</Link>
+                                <button className="btn btn-primary btn-block btn-lg mx-auto py-4" onClick={this.startStep} step-no="1">Get Started</button>
                             </div>
 
                         </div>

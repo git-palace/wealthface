@@ -16,23 +16,3 @@ main {
         right: 8rem;
     }
 }
-
-h1 {
-    font-weight: 500;
-    font-size: 3rem;
-    color: #3b4ba2;
-    position: relative;
-    &:after {
-        position: absolute;
-        content: '';
-        left: 42%;
-        right: 42%;
-        bottom: 0px;
-        border: 2px solid #33b5e5;
-    }
-}
-
-h4 {
-    font-weight: 400;
-    color: #888;
-}

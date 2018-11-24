@@ -9,6 +9,10 @@ import {
     resendVerificationEmail
 } from './services/actions/user.js'
 
+import {
+    getAllQuestions
+} from './services/actions/questions.js'
+
 import Header from './components/Header'
 import Footer from './components/Footer'
 import GetStarted from './components/Pages/GetStarted'
@@ -56,8 +60,12 @@ class Container extends Component {
                             />
                         )} />
 
-                        <Route exact path="/steps" component={Steps} />
-                        <Route exact path="/steps/select-style" component={SelectStyle} />
+                        <Route exact path="/steps" component={() => (
+                            <Steps {...this.props} />
+                        )} />
+                        <Route exact path="/steps/select-style" component={() => (
+                            <SelectStyle {...this.props} />
+                        )} />
 
                         <Route exact path="/help" component={Help} />
                     </Switch>
@@ -74,7 +82,8 @@ const mapDispatchToProps = (dispatch) => {
         userSignIn: (email, password) => { userSignIn(dispatch, email, password) },
         userSignUp: (userData) => { userSignUp(dispatch, userData) },
         populateUserData: (token, vEmailToken) => { populateUserData(dispatch, token, vEmailToken) },
-        resendVerificationEmail: () => { resendVerificationEmail(dispatch) }
+        resendVerificationEmail: () => { resendVerificationEmail(dispatch) },
+        getAllQuestions: (stepNo) => { getAllQuestions(dispatch, stepNo) }
     }
 }
 
