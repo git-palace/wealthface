@@ -42,7 +42,7 @@ class Choices extends Component {
             <div className='d-flex flex-column choice-container'>
                 <h1 className={'text-center mx-auto pb-3 col-12'}>{question.title}</h1>
 
-                {(question.description) ? (<p className='description col-12 text-center my-2'>{question.description}</p>) : ''}
+                {(question.description) ? (<p className='description col-12 text-center my-2'>{question.description}</p>) : null}
 
                 {
                     question.options.map((choice_value, key) => {

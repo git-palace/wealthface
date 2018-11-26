@@ -12,6 +12,28 @@ module.exports = (app) => {
             ],
             cssAttr: 'xs'
         }, {
+            type: 'slide',
+            title: 'Amount to Invest',
+            default: 15000,
+            min: 5000,
+            max: 35000,
+            step: 500
+        }, {
+            type: 'slide',
+            title: 'Annual Salary',
+            default: 75000,
+            min: 50000,
+            max: 100000,
+            step: 1000
+        }, {
+            type: 'slide',
+            title: 'Net Value',
+            default: 150000,
+            min: 50000,
+            max: 300000,
+            step: 5000,
+            description: 'What is your Assets minus your total Debts?\n your total assets should not include your residential property'
+        }, {
             type: 'choice',
             title: 'What is your main investment objective?',
             options: [

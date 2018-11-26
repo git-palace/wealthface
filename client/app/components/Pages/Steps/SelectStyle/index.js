@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Choice from '../../../QuestionTemplates/Choice'
+import Slide from '../../../QuestionTemplates/Slide'
 import './styles.scss'
 
 class SelectStyle extends Component {
@@ -64,6 +65,9 @@ class SelectStyle extends Component {
             switch (question.type) {
                 case "choice":
                     return (<Choice key={questionIdx} question={question} questionAnswer={questionAnswer} setAnswer={(answer) => this.setAnswer(answer)} />)
+
+                case "slide":
+                    return (<Slide key={questionIdx} question={question} questionAnswer={questionAnswer ? questionAnswer : null} setAnswer={(answer) => this.setAnswer(answer)} />)
             }
         }
 
