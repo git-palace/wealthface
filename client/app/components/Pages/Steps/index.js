@@ -30,7 +30,7 @@ class Steps extends Component {
                                     Take 1-2 minutes to answer<br /> these questions so we can<br /> build a profile that/s right for<br /> you.
                                 </p>
 
-                                <button className="btn btn-primary btn-block btn-lg mx-auto py-4" onClick={this.startStep} step-no="1">Get Started</button>
+                                <button className="btn btn-primary btn-block waves-effect btn-lg mx-auto py-4" onClick={this.startStep} step-no="1">Get Started</button>
                             </div>
 
                         </div>
@@ -55,7 +55,7 @@ class Steps extends Component {
 
                         <div className="card w-100">
                             <div className="card-body py-5 px-4">
-                                <h2 className="card-title">Set up your account</h2>
+                                <h2 className="card-title">Fund your account</h2>
                                 <hr />
 
                                 <p className="card-text"></p>

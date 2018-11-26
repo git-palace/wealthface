@@ -148,7 +148,7 @@ class GetStarted extends Component {
             </div>
           </div>
 
-          <button type="submit" className="col-6 btn btn-primary btn-block btn-lg mx-auto py-4">Get Started</button>
+          <button type="submit" className="col-6 btn btn-primary waves-effect btn-block btn-lg mx-auto py-4">Get Started</button>
           {
             (isLoading) ? (
               <div className="col-12 preloader-container">

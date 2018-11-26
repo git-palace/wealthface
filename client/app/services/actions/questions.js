@@ -10,3 +10,7 @@ export const getAllQuestions = (dispatch, stepNo) => {
             dispatch(push('/steps/select-style'))
     })
 }
+
+export const setQuestion = (dispatch, questionIdx, answer, step) => {
+    dispatch({ type: QUESTIONS.SET_QUESTION, data: { questionIdx: questionIdx, answer: answer, step: step } })
+}

@@ -10,7 +10,8 @@ import {
 } from './services/actions/user.js'
 
 import {
-    getAllQuestions
+    getAllQuestions,
+    setQuestion
 } from './services/actions/questions.js'
 
 import Header from './components/Header'
@@ -47,10 +48,7 @@ class Container extends Component {
                 <main className="p-5">
                     <Switch>
                         <Route exact path="/" component={() => (
-                            <GetStarted
-                                {...this.props}
-
-                            />
+                            <GetStarted {...this.props} />
                         )} />
 
                         <Route exact path="/confirm-email/:token?" component={() => (
@@ -63,6 +61,7 @@ class Container extends Component {
                         <Route exact path="/steps" component={() => (
                             <Steps {...this.props} />
                         )} />
+
                         <Route exact path="/steps/select-style" component={() => (
                             <SelectStyle {...this.props} />
                         )} />
@@ -83,7 +82,8 @@ const mapDispatchToProps = (dispatch) => {
         userSignUp: (userData) => { userSignUp(dispatch, userData) },
         populateUserData: (token, vEmailToken) => { populateUserData(dispatch, token, vEmailToken) },
         resendVerificationEmail: () => { resendVerificationEmail(dispatch) },
-        getAllQuestions: (stepNo) => { getAllQuestions(dispatch, stepNo) }
+        getAllQuestions: (stepNo) => { getAllQuestions(dispatch, stepNo) },
+        setQuestion: (questionIdx, answer, step) => { setQuestion(dispatch, questionIdx, answer, step) },
     }
 }
 

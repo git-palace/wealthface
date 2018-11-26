@@ -5,5 +5,6 @@ export const USER = {
 }
 
 export const QUESTIONS = {
-    GET_ALL: 'GET_ALL'
+    GET_ALL: 'GET_ALL',
+    SET_QUESTION: 'SET_QUESTION'
 }

@@ -1,0 +1,15 @@
+.page-select-style {
+    .buttons {
+        button {
+            background-color: #4285f4;
+            font-size: 1.25rem;
+            border-radius: 8px;
+            .fa {
+                font-size: 1.25rem;
+            }
+            &:disabled {
+                background-color: #aaa!important;
+            }
+        }
+    }
+}

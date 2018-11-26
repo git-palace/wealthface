@@ -101,7 +101,7 @@ class Header extends Component {
                   </div>
 
                   <div className="form-row">
-                    <button className="btn btn-indigo mx-auto my-3" type="submit">Sign In</button>
+                    <button className="btn btn-indigo waves-effect mx-auto my-3" type="submit">Sign In</button>
                   </div>
                 </form>
               </div>

@@ -4,34 +4,52 @@ import './styles.scss'
 class Choices extends Component {
     constructor(props) {
         super(props)
-
-        this.unCheckOthers = this.unCheckOthers.bind(this)
     }
 
     getClassName() {
+        if (!this.props.question.cssAttr)
+            return 'col-6'
+
         switch (this.props.question.cssAttr) {
-            case "xs":
-                return "col-6";
+            case 'xs':
+                return 'col-6'
+
+            case 'md':
+                return 'col-8'
+
+            case 'lg':
+                return 'col-10'
+
             default:
-                return "col-8";
+                return 'col-6'
         }
     }
 
-    unCheckOthers(event) {
-        $(event.target.parentElement).addClass("selected")
-        $(event.target.parentElement).siblings().removeClass("selected").children("input").prop("checked", false)
+    selectChoice(event, answer) {
+        if ($(event.target.parentElement).hasClass('selected'))
+            $(event.target.parentElement).removeClass('selected')
+        else
+            $(event.target.parentElement).addClass('selected')
+        $(event.target.parentElement).siblings().removeClass('selected').children('input').prop('checked', false)
+
+        this.props.setAnswer(answer)
     }
 
     render() {
+        const { question, questionAnswer } = this.props;
+
         return (
-            <div className="d-flex flex-column choice-container">
-                <h1 className={"text-center mx-auto pb-3 " + this.getClassName()}>{this.props.question.title}</h1>
+            <div className='d-flex flex-column choice-container'>
+                <h1 className={'text-center mx-auto pb-3 col-12'}>{question.title}</h1>
+
+                {(question.description) ? (<p className='description col-12 text-center my-2'>{question.description}</p>) : ''}
+
                 {
-                    this.props.question.options.map((c_option, key) => {
+                    question.options.map((choice_value, key) => {
                         return (
-                            <div key={key} className={"form-check choice mx-auto my-3 " + this.getClassName()}>
-                                <input type="checkbox" className="form-check-input" id={"choice-" + key} name="answer" onClick={this.unCheckOthers} />
-                                <label className="form-check-label col" htmlFor={"choice-" + key}>{c_option}</label>
+                            <div key={key} className={'form-check choice mx-auto my-3 ' + this.getClassName() + (questionAnswer == choice_value ? ' selected' : '')}>
+                                <input type='checkbox' className='form-check-input' id={'choice-' + key} onChange={(e) => this.selectChoice(e, choice_value)} checked={questionAnswer == choice_value} />
+                                <label className='form-check-label col' htmlFor={'choice-' + key}>{choice_value}</label>
                             </div>
                         )
                     })

@@ -30,7 +30,7 @@ class ConfirmEmail extends Component {
 					If the above email is not the right one, you may change it <a href="" target="__blank"><em>here</em></a>
 				</h4>
 
-				<button type="button" className="col-6 btn btn-primary btn-block btn-lg mx-auto py-4">I've confirmed my email</button>
+				<button type="button" className="col-6 btn waves-effect btn-primary btn-block btn-lg mx-auto py-4">I've confirmed my email</button>
 
 				<b className="col-4 d-block mx-auto my-5 text-center"><a className="resend-v-email" href="javascript:void(0)" onClick={this.resendVerificationEmail}><em>Resend verification email</em></a></b>
 			</div>
