@@ -5,7 +5,6 @@ import './styles.scss'
 class Slide extends Component {
     constructor(props) {
         super(props)
-        debugger
     }
 
     onSlideChange(value) {

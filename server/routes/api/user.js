@@ -10,7 +10,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const sendVerificationEmail = (email, token) => {
     let verificationLink = process.env.HOST + '/confirm-email/' + token
 
-    const msg = {
+    let msg = {
         to: email,
         from: 'info@wealthface.com',
         subject: 'Verify your account',
@@ -72,7 +72,7 @@ module.exports = (app) => {
             }
 
             // Save the new user
-            const newUser = new User()
+            let newUser = new User()
 
             newUser.firstName = params['firstName']
             newUser.lastName = params['lastName']
